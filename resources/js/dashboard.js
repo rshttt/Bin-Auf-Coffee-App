@@ -1,4 +1,4 @@
-// import './bootstrap';
+import './bootstrap';
 $(document).ready(() => {
     let allProducts = [];
 
@@ -103,12 +103,15 @@ $(document).ready(() => {
 
         if(filteredProducts.length > 0) {
             filteredProducts.forEach(product => {
+                const regex = new RegExp(query, 'gi')
+                const highlightedName = product.name.replace(regex, `<span class="text-[#706D54] font-bold">$&</span>`)
                 const suggestionHTML = `
                     <h1 
-                        class="lexend-medium text-[#706D54] text-xs/[36px] capitalize cursor-pointer hover:bg-[#D9D9D9]/30 pl-3"
-                        data-id="${product.id}"
+                    class="lexend-medium text-[#706D54]/50 text-xs/[36px] capitalize cursor-pointer hover:bg-[#D9D9D9]/30 pl-3 relative"
+                    data-id="${product.id}"
                     >
-                        ${product.name}
+                        
+                        ${highlightedName}
                     </h1>
                     <hr class="min-w-full border-b-[1.5px] rounded-xl border-black/12">
                 `;
@@ -180,28 +183,7 @@ $(document).ready(() => {
     })
     $(document).on("click", "#reviews-list-products.text-\\[\\#4E4C3D\\]", function() {
         $("#coffee-reviews").trigger("click")
-    })
-
-    $("button[id$='-reviews']").click(function() {
-        const buttonName = $(this).attr("id").split("-reviews")[0]
-        $("button[id$='-reviews'].bg-\\[\\#C9B194\\]").removeClass("bg-[#C9B194]")
-        $(this)
-            .removeClass("bg-[#C9B194]/25")
-            .addClass("bg-[#C9B194]")
-        $(`div[id$='-product']:not([id='${buttonName}-product'])`).hide()
-        $(`#${buttonName}-product`).fadeIn(300)
-    }).hover(
-        function() {
-            if(!$(this).hasClass("bg-[#C9B194]")) {
-                $(this).addClass("bg-[#C9B194]/25")
-            }
-        }, 
-        function() {
-            if(!$(this).hasClass("bg-[#C9B194]")) {
-                $(this).removeClass("bg-[#C9B194]/25")
-            }
-        }
-    );
+    });
 
     (async () => {
         try {
@@ -227,6 +209,21 @@ $(document).ready(() => {
                         </div>
                         `
                     )
+                    $("#productContainer").append(
+                        `
+                            <div class="grid grid-cols-3 justify-items-center gap-[20px] transition-all ease-out" id="${category.name}-product" style="display: none;"></div>
+                        `
+                    )
+                    $("#productButtonContainer").append(
+                        `
+                            <button
+                            class="lexend-semibold text-md text-white h-full w-full rounded-[14px] cursor-pointer transition-color duration-300 capitalize"
+                            id="${category.name}-reviews"
+                            >
+                                    ${category.name}
+                            </button>
+                        `
+                    )
                 })
                 
             } else {
@@ -237,6 +234,27 @@ $(document).ready(() => {
             console.error(err);
         }
     })();
+
+    $(document).on("click", "button[id$='-reviews']", function() {
+        const buttonName = $(this).attr("id").split("-reviews")[0]
+        $("button[id$='-reviews'].bg-\\[\\#C9B194\\]").removeClass("bg-[#C9B194]")
+        $(this)
+            .removeClass("bg-[#C9B194]/25")
+            .addClass("bg-[#C9B194]")
+        $(`div[id$='-product']:not([id='${buttonName}-product'])`).hide()
+        $(`#${buttonName}-product`).fadeIn(300)
+    }).hover(
+        function() {
+            if(!$(this).hasClass("bg-[#C9B194]")) {
+                $(this).addClass("bg-[#C9B194]/25")
+            }
+        }, 
+        function() {
+            if(!$(this).hasClass("bg-[#C9B194]")) {
+                $(this).removeClass("bg-[#C9B194]/25")
+            }
+        }
+    );
 
     for(let i = 0; i < 40; i++) {
         $("#gallery").append(

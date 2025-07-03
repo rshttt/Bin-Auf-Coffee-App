@@ -236,58 +236,11 @@
                                 class="absolute top-[20px] left-0 w-full bg-white pt-[28px] pb-[8px] px-[24px] z-1 grid grid-cols-1"
                                 id="suggestion"
                                 style="box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25); display: none;"
-                                >
-                                    <h1 class="lexend-medium text-[#706D54] text-xs/[36px] capitalize cursor-pointer hover:bg-[#D9D9D9]/30 pl-3">
-                                        Text1
-                                    </h1>
-                                    <hr class="min-w-full border-b-[1.5px] rounded-xl border-black/12">
-                                    <h1 class="lexend-medium text-[#706D54]/45 text-xs/[36px] capitalize cursor-pointer hover:bg-[#D9D9D9]/30 pl-3">
-                                        Text2
-                                    </h1>
-                                    <hr class="min-w-full border-b-[1.5px] rounded-xl border-black/12">
-                                    <h1 class="lexend-medium text-[#706D54]/45 text-xs/[36px] capitalize cursor-pointer hover:bg-[#D9D9D9]/30 pl-3">
-                                        Text3
-                                    </h1>
-                                </div>
+                                ></div>
                             </div>
-                            <div class="mt-[26px] mb-[26px] bg-[#706D54] grid grid-cols-5 gap-[10px] h-[46px] w-[1000px] justify-items-center rounded-[16px] p-1">
-                                <button
-                                class="lexend-semibold text-md text-white h-full w-full rounded-[14px] cursor-pointer transition-color duration-300"
-                                id="coffee-reviews"
-                                >
-                                    Coffee
-                                </button>
-                                <button
-                                class="lexend-semibold text-md text-white h-full w-full rounded-[14px] cursor-pointer transition-color duration-300"
-                                id="non-coffee-reviews"
-                                >
-                                    Non Coffee
-                                </button>
-                                <button
-                                class="lexend-semibold text-md text-white h-full w-full rounded-[14px] cursor-pointer transition-color duration-300"
-                                id="cake-reviews"
-                                >
-                                    Cake
-                                </button>
-                                <button
-                                class="lexend-semibold text-md text-white h-full w-full rounded-[14px] cursor-pointer transition-color duration-300"
-                                id="snack-reviews"
-                                >
-                                    Snack
-                                </button>
-                                <button
-                                class="lexend-semibold text-md text-white h-full w-full rounded-[14px] cursor-pointer transition-color duration-300"
-                                id="meal-reviews"
-                                >
-                                    Meal
-                                </button>
+                            <div class="mt-[26px] mb-[26px] bg-[#706D54] flex gap-[10px] h-[46px] w-[1000px] justify-center items-center rounded-[16px] p-1" id="productButtonContainer">
                             </div>
-                            <div class="">
-                                <div class="grid grid-cols-3 justify-items-center gap-[20px] transition-all ease-out" id="coffee-product" style="display: none;"></div>
-                                <div class="grid grid-cols-3 justify-items-center gap-[20px] transition-all ease-out" id="non-coffee-product" style="display: none;"></div>
-                                <div class="grid grid-cols-3 justify-items-center gap-[20px] transition-all ease-out" id="cake-product" style="display: none;"></div>
-                                <div class="grid grid-cols-3 justify-items-center gap-[20px] transition-all ease-out" id="snack-product" style="display: none;"></div>
-                                <div class="grid grid-cols-3 justify-items-center gap-[20px] transition-all ease-out" id="meal-product" style="display: none;"></div>
+                            <div id="productContainer">
                             </div>
                         </div>
                     </div>
