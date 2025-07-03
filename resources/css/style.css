@@ -1,0 +1,51 @@
+html {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+.lexend-regular {
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+.lexend-medium {
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+.lexend-extrabold {
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+.lexend-bold {
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+.lexend-semibold {
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+.lemon-regular {
+    font-family: "Lemon", serif;
+    font-weight: 400;
+    font-style: normal;
+}
