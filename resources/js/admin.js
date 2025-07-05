@@ -104,12 +104,14 @@ $(document).ready(() => {
 
         if(filteredProducts.length > 0) {
             filteredProducts.forEach(product => {
+                const regex = new RegExp(query, 'gi')
+                const highlightedName = product.name.replace(regex, `<span class="text-[#706D54] font-bold">$&</span>`)
                 const suggestionHTML = `
                     <h1 
-                        class="lexend-medium text-[#706D54] text-xs/[36px] capitalize cursor-pointer hover:bg-[#D9D9D9]/30 pl-3"
+                        class="lexend-medium text-[#706D54]/50 text-xs/[36px] capitalize cursor-pointer hover:bg-[#D9D9D9]/30 pl-3"
                         data-id="${product.id}"
                     >
-                        ${product.name}
+                        ${highlightedName}
                     </h1>
                     <hr class="min-w-full border-b-[1.5px] rounded-xl border-black/12">
                 `;
@@ -177,32 +179,10 @@ $(document).ready(() => {
 
     $(document).on("click", "#reviews-button.lexend-extrabold", function() {
         $("#reviews-list-products").trigger("click")
-        // $("#reviews-list-overall").trigger("click")
     })
     $(document).on("click", "#reviews-list-products.text-\\[\\#4E4C3D\\]", function() {
         $("#coffee-reviews").trigger("click")
-    })
-
-    $("button[id$='-reviews']").click(function() {
-        const buttonName = $(this).attr("id").split("-reviews")[0]
-        $("button[id$='-reviews'].bg-\\[\\#C9B194\\]").removeClass("bg-[#C9B194]")
-        $(this)
-            .removeClass("bg-[#C9B194]/25")
-            .addClass("bg-[#C9B194]")
-        $(`div[id$='-product']:not([id='${buttonName}-product'])`).hide()
-        $(`#${buttonName}-product`).fadeIn(300)
-    }).hover(
-        function() {
-            if(!$(this).hasClass("bg-[#C9B194]")) {
-                $(this).addClass("bg-[#C9B194]/25")
-            }
-        }, 
-        function() {
-            if(!$(this).hasClass("bg-[#C9B194]")) {
-                $(this).removeClass("bg-[#C9B194]/25")
-            }
-        }
-    );
+    });
 
     (async () => {
         try {
@@ -228,6 +208,21 @@ $(document).ready(() => {
                         </div>
                         `
                     )
+                    $("#productContainer").append(
+                        `
+                            <div class="grid grid-cols-3 justify-items-center gap-[20px] transition-all ease-out" id="${category.name}-product" style="display: none;"></div>
+                        `
+                    )
+                    $("#productButtonContainer").append(
+                        `
+                            <button
+                            class="lexend-semibold text-md text-white h-full w-full rounded-[14px] cursor-pointer transition-color duration-300 capitalize"
+                            id="${category.name}-reviews"
+                            >
+                                    ${category.name}
+                            </button>
+                        `
+                    )
                 })
                 $("#menu").append(
                     `
@@ -236,7 +231,6 @@ $(document).ready(() => {
                         </div>
                     `
                 )
-                
             } else {
                 alert("Gagal mengambil data kategori!");
             }
@@ -245,6 +239,28 @@ $(document).ready(() => {
             console.error(err);
         }
     })();
+    
+    $(document).on("click", "button[id$='-reviews']", function() {
+        const buttonName = $(this).attr("id").split("-reviews")[0]
+        $("button[id$='-reviews'].bg-\\[\\#C9B194\\]").removeClass("bg-[#C9B194]")
+        $(this)
+            .removeClass("bg-[#C9B194]/25")
+            .addClass("bg-[#C9B194]")
+        $(`div[id$='-product']:not([id='${buttonName}-product'])`).hide()
+        $(`#${buttonName}-product`).fadeIn(300)
+    }).hover(
+        function() {
+            if(!$(this).hasClass("bg-[#C9B194]")) {
+                $(this).addClass("bg-[#C9B194]/25")
+            }
+        }, 
+        function() {
+            if(!$(this).hasClass("bg-[#C9B194]")) {
+                $(this).removeClass("bg-[#C9B194]/25")
+            }
+        }
+    );
+
     $(document).on("click", "div[id^='category=']", async function() {
         const categoryId = $(this).attr("id").split("category=")[1];
         window.location.href = `/categories/${categoryId}/edit`;
@@ -372,22 +388,6 @@ $(document).ready(() => {
         )
     }
 
-    const buttonName = ["All",5,4,3,2,1]
-    for(let i = 0; i < buttonName.length; i++) {
-        let buttonContent = buttonName[i]
-        if(i != 0) buttonContent += `<img src="assets/images/small-star.svg" alt="star" width="20">`
-        $("#filter-star").append(
-            `
-                <button
-                class="lexend-bold text-lg rounded-[16px] outline-2 outline-[#706D54] bg-white text-[#A08963] flex justify-center items-center gap-[4px] min-w-max h-[32px] cursor-pointer hover:bg-gray-200/75 active:bg-[#706D54]/25 active:text-[#A08963] focus:bg-[#706D54] focus:text-white"
-                id="star-${buttonName[i]}"
-                >
-                    ${buttonContent}
-                </button>
-            `
-        )
-    }
-
     for(let i = 0; i < 3; i++) {
         $("#newspapers-facts").append(
             `
@@ -435,7 +435,7 @@ $(document).ready(() => {
         const content = newsContent[i%3]
         $("#newspapers").append(
             `
-                <div class="h-[380px] w-[420px] relative">
+                <div class="news-${i} h-[380px] w-[420px] relative">
                     <div class="bg-${color[0]} w-[220px] h-[280px] rounded-[12px] absolute top-[20px] left-[160px] -z-1 rotate-12"></div>
                     <div class="bg-${color[1]} w-[220px] h-[280px] rounded-[12px] absolute top-[80px] left-0 -z-1 -rotate-6"></div>
                     <div class="mt-[40px] ml-[80px] bg-white w-[220px] h-[280px] rounded-[12px] outline-2 outline-[#CFCFCF] grid grid-cols-1 content-between p-[14px] cursor-pointer hover:bg-gray-100 hover:outline-black active:outline-4 active:bg-gray-200">
@@ -445,7 +445,7 @@ $(document).ready(() => {
                         <h1 class="lexend-bold text-[#706D54] text-base pl-[4px] pr-[10px]">
                             ${content[1]}
                         </h1>
-                        <h2 class="news-${i} lexend-bold text-[#706D54]/50 text-[10px] pl-[4px] pr-[10px] cursor-pointer">
+                        <h2 class="lexend-bold text-[#706D54]/50 text-[10px] pl-[4px] pr-[10px] cursor-pointer">
                             Informasi selengkapnya...
                         </h2>
                     </div>
@@ -464,7 +464,7 @@ $(document).ready(() => {
             </div>
         `
     )
-    $(document).on("click", "h2[class^='news-']", function() {
+    $(document).on("click", "div[class^='news-'], h2[class^='news-']", function() {
         const newsId = $(this)
             .attr("class")
             .split(" ")
@@ -562,7 +562,23 @@ $(document).ready(() => {
     $(document).on("click", "div[id^='invoice=']", async function() {
         const invoiceCode = $(this).attr("id").split("invoice=")[1];
         window.location.href = `/invoices/${invoiceCode}/view`;
-    })
+    });
+
+    (async() => {
+        try {
+            const response = await fetch("/shop-reviews", { method: "GET" });
+            const data = await response.json();
+
+            if (response.ok) {
+                
+            } else {
+                alert("Gagal mengambil data review toko!");
+            }
+        } catch (err) {
+            alert("Gagal menghubungi server.");
+            console.error(err);
+        }
+    })();
 })
 
 function avg(reviews) {

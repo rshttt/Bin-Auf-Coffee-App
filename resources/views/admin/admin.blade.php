@@ -49,7 +49,7 @@
                     class="mt-[8px] lexend-regular h-[50px] w-[128px] cursor-pointer focus:outline-none relative"
                     id="reviews-button"
                     >
-                        Edit Reviews
+                        Edit Products
                         <hr class="mt-[8px] border-y-[2px] border-[#D9D9D9] rounded-xl m-auto" style="visibility: hidden;">
                     </button>
                     <div
@@ -62,12 +62,6 @@
                         id="reviews-list-products"
                         >
                             Products
-                        </button>
-                        <button
-                        class="lexend-regular hover:bg-[#CFCFCF]/75 hover:text-[#4E4C3D]/50 text-[#A08963] text-sm cursor-pointer min-h-[28px] w-full rounded-[6px]"
-                        id="reviews-list-overall"
-                        >
-                            Overall
                         </button>
                         <form action="/products/create" method="GET">
                             <button
@@ -271,83 +265,12 @@
                                 <div
                                 class="absolute top-[20px] left-0 w-full bg-white pt-[28px] pb-[8px] px-[24px] z-1 grid grid-cols-1"
                                 id="suggestion"
-                                style="box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25); display: none;"
-                                >
-                                </div>
+                                style="box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25); display: none;"></div>
                             </div>
-                            <div class="mt-[26px] mb-[26px] bg-[#706D54] grid grid-cols-5 gap-[10px] h-[46px] w-[1000px] justify-items-center rounded-[16px] p-1">
-                                <button
-                                class="lexend-semibold text-md text-white h-full w-full rounded-[14px] cursor-pointer transition-color duration-300"
-                                id="coffee-reviews"
-                                >
-                                    Coffee
-                                </button>
-                                <button
-                                class="lexend-semibold text-md text-white h-full w-full rounded-[14px] cursor-pointer transition-color duration-300"
-                                id="non-coffee-reviews"
-                                >
-                                    Non Coffee
-                                </button>
-                                <button
-                                class="lexend-semibold text-md text-white h-full w-full rounded-[14px] cursor-pointer transition-color duration-300"
-                                id="cake-reviews"
-                                >
-                                    Cake
-                                </button>
-                                <button
-                                class="lexend-semibold text-md text-white h-full w-full rounded-[14px] cursor-pointer transition-color duration-300"
-                                id="snack-reviews"
-                                >
-                                    Snack
-                                </button>
-                                <button
-                                class="lexend-semibold text-md text-white h-full w-full rounded-[14px] cursor-pointer transition-color duration-300"
-                                id="meal-reviews"
-                                >
-                                    Meal
-                                </button>
+                            <div class="mt-[26px] mb-[26px] bg-[#706D54] flex gap-[10px] h-[46px] w-[1000px] justify-center items-center rounded-[16px] p-1" id="productButtonContainer">
                             </div>
-                            <div class="">
-                                <div class="grid grid-cols-3 justify-items-center gap-[20px] transition-all ease-out" id="coffee-product" style="display: none;"></div>
-                                <div class="grid grid-cols-3 justify-items-center gap-[20px] transition-all ease-out" id="non-coffee-product" style="display: none;"></div>
-                                <div class="grid grid-cols-3 justify-items-center gap-[20px] transition-all ease-out" id="cake-product" style="display: none;"></div>
-                                <div class="grid grid-cols-3 justify-items-center gap-[20px] transition-all ease-out" id="snack-product" style="display: none;"></div>
-                                <div class="grid grid-cols-3 justify-items-center gap-[20px] transition-all ease-out" id="meal-product" style="display: none;"></div>
+                            <div id="productContainer">
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="overall">
-                    <div class="min-h-max w-full mb-[100px]">
-                        <div>
-                            <img src="{{ asset('assets/images/ellipse_coklat.svg') }}" alt="ellipse" class="absolute top-0 w-full h-[240px] -z-10">
-                            <img src="{{ asset('assets/images/ellipse_putih.svg') }}" alt="ellipse" class="absolute top-0 w-full h-[160px] -z-10">
-                        </div>
-                        <div class="fade-in-section opacity-0 translate-y-8 transition-all duration-700 ease-out grid justify-items-center mt-[140px]">
-                            <h1 class="lexend-bold text-[#A08963] text-4xl mb-[60px]">
-                                CUSTOMER REVIEWS
-                            </h1>
-                            <div class="flex justify-center min-w-max px-[120px] gap-[20px] mb-[40px]">
-                                <div class="min-w-[300px] min-h-[300px] rounded-[24px] bg-white flex flex-col justify-center items-center p-[20px]" style="box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);">
-                                    <div class="relative mb-[20px]">
-                                        <img src="{{ asset('assets/images/big-star.svg') }}" alt="star" width="200">
-                                        <h1 class="lexend-bold text-[#706D54] text-5xl absolute top-1/2 left-1/2 translate-[-50%]">
-                                            4.7
-                                        </h1>
-                                    </div>
-                                    <h1 class="lexend-semibold text-[#A08963] text-xl">
-                                        Average Rating
-                                    </h1>
-                                    <h1 class="lexend-regular text-[#A08963]/75 text-xs">
-                                        Based on 7273 ratings
-                                    </h1>
-                                </div>
-                                <table class="min-w-max border-separate border-spacing-x-[40px]">
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="grid grid-cols-6 px-[140px] w-full gap-[20px]" id="filter-star"></div>
                         </div>
                     </div>
                 </div>

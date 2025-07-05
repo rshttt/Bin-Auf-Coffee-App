@@ -246,7 +246,7 @@
                     </div>
                 </div>
                 <div id="overall">
-                    <div class="min-h-max w-full mb-[100px]">
+                    <div class="min-h-max w-full mb-[140px]">
                         <div>
                             <img src="{{ asset('assets/images/ellipse_coklat.svg') }}" alt="ellipse" class="absolute top-0 w-full h-[240px] -z-10">
                             <img src="{{ asset('assets/images/ellipse_putih.svg') }}" alt="ellipse" class="absolute top-0 w-full h-[160px] -z-10">
@@ -259,15 +259,13 @@
                                 <div class="min-w-[300px] min-h-[300px] rounded-[24px] bg-white flex flex-col justify-center items-center p-[20px]" style="box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);">
                                     <div class="relative mb-[20px]">
                                         <img src="{{ asset('assets/images/big-star.svg') }}" alt="star" width="200">
-                                        <h1 class="lexend-bold text-[#706D54] text-5xl absolute top-1/2 left-1/2 translate-[-50%]">
-                                            4.7
+                                        <h1 class="lexend-bold text-[#706D54] text-5xl absolute top-1/2 left-1/2 translate-[-50%]" id="ratingAvg">
                                         </h1>
                                     </div>
                                     <h1 class="lexend-semibold text-[#A08963] text-xl">
                                         Average Rating
                                     </h1>
-                                    <h1 class="lexend-regular text-[#A08963]/75 text-xs">
-                                        Based on 7273 ratings
+                                    <h1 class="lexend-regular text-[#A08963]/75 text-xs" id="ratingCount">
                                     </h1>
                                 </div>
                                 <table class="min-w-max border-separate border-spacing-x-[40px]">
@@ -276,6 +274,7 @@
                                 </table>
                             </div>
                             <div class="grid grid-cols-6 px-[140px] w-full gap-[20px]" id="filter-star"></div>
+                            <div class="w-screen mt-[40px]" id="shop-reviews"></div>
                         </div>
                     </div>
                 </div>

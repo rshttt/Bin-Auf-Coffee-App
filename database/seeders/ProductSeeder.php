@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Product;
+use App\Models\ShopReview;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -76,28 +77,6 @@ class ProductSeeder extends Seeder
 
             $delivery_cost += 2500;
         }
-
-        // 2. Hitung di Controller atau Service saat menyimpan
-        // Misalnya:
-        // php
-        // Copy
-        // Edit
-        // $invoice = new Invoice([
-        //     'code' => 'A0001',
-        //     'delivery_cost' => 5000
-        // ]);
-        // $invoice->save();
-
-        // // Tambah relasi ke products
-        // $invoice->products()->attach([
-        //     1 => ['quantity' => 2, 'cost' => 20000],
-        //     2 => ['quantity' => 1, 'cost' => 15000]
-        // ]);
-
-        // // Hitung total cost dari invoice_products
-        // $total = $invoice->products()->sum('invoice_products.cost');
-        // $invoice->total_cost = $total + $invoice->delivery_cost;
-        // $invoice->save();
     }
 
     private function seedInvoiceProduct() {
@@ -123,6 +102,21 @@ class ProductSeeder extends Seeder
         }
     }
 
+    private function seedShopReview() {
+        $user_id = User::pluck('id')->toArray();
+
+        if(count($user_id) > 0) {
+            ShopReview::whereIn('user_id', $user_id)->delete();
+            
+            for ($i = 0; $i <= 5; $i++) {
+                ShopReview::create([
+                    'user_id' => $user_id[$i % count($user_id)],
+                    'rate' => $i
+                ]);
+            }
+        }
+    }
+
     /**
      * Run the database seeds.
      */
@@ -132,5 +126,6 @@ class ProductSeeder extends Seeder
         $this->seedProduct();
         $this->seedInvoice();
         $this->seedInvoiceProduct();
+        $this->seedShopReview();
     }
 }

@@ -31,6 +31,12 @@ return new class extends Migration
             $table->unsignedInteger('total_cost')->default(0);
 
             $table->enum('status', ['ready', 'received', 'paid', 'served', 'delivered', 'done'])->default('ready');
+
+            $table->string('additional')->nullable();
+
+            $table->enum('delivery_options', ['take away', 'delivered'])->default('delivered');
+
+            $table->enum('payment_method', ['cash', 'non-cash'])->default('non-cash');
             
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
@@ -87,11 +93,23 @@ return new class extends Migration
 
             $table->unsignedTinyInteger('rate');
 
-            $table->string('review');
+            $table->string('review')->nullable();
 
             $table->timestamps();
 
             $table->primary(['user_id', 'product_id']);
+        });
+
+        Schema::create('shop_reviews', function (Blueprint $table) {
+            $table->id();
+
+            $table->unsignedTinyInteger('rate');
+
+            $table->string('review')->nullable();
+
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+            $table->timestamps();
         });
     }
 
@@ -100,6 +118,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('shop_reviews');
         Schema::dropIfExists('reviews');
         Schema::dropIfExists('product_favorites');
         Schema::dropIfExists('invoice_products');

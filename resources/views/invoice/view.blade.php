@@ -19,7 +19,7 @@
         @vite(['resources/css/style.css'])
 
         <title>
-            {{ strtoupper($invoice->code) }}
+            INVOICE #{{ strtoupper($invoice->code) }}
         </title>
 
         <script>
@@ -200,29 +200,49 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="min-w-full grid gap-[8px] px-[50px]">
+                    <div class="min-w-full grid gap-[4px] px-[50px]">
                         <div class="flex gap-[8px]">
-                            <h1 class="lexend-medium text-[#A08963] text-lg">
-                                Additional Notes :
+                            <h1 class="lexend-medium text-[#A08963] text-lg w-[160px]">
+                                User / Buyer
                             </h1>
-                            <h1 class="lexend-medium text-[#A08963]/80 text-lg">
-                                Jangan terlalu pahit ya kak, makasih sebelumnya
+                            <h1 class="lexend-medium text-[#A08963] text-lg">
+                                :
+                            </h1>
+                            <h1 class="lexend-medium text-[#A08963]/80 text-lg capitalize">
+                                {{ $invoice->user->name }}
                             </h1>
                         </div>
                         <div class="flex gap-[8px]">
-                            <h1 class="lexend-medium text-[#A08963] text-lg">
-                                Delivery Option :
+                            <h1 class="lexend-medium text-[#A08963] text-lg w-[160px]">
+                                Additional Notes
                             </h1>
-                            <h1 class="lexend-medium text-[#A08963]/80 text-lg">
-                                Take Away
+                            <h1 class="lexend-medium text-[#A08963] text-lg">
+                                :
+                            </h1>
+                            <h1 class="lexend-medium text-[#A08963]/80 text-lg capitalize">
+                                {{ $invoice->additional ?? "-" }}
                             </h1>
                         </div>
                         <div class="flex gap-[8px]">
-                            <h1 class="lexend-medium text-[#A08963] text-lg">
-                                Paymend Method :
+                            <h1 class="lexend-medium text-[#A08963] text-lg w-[160px]">
+                                Delivery Option
                             </h1>
-                            <h1 class="lexend-medium text-[#A08963]/80 text-lg">
-                                Cash
+                            <h1 class="lexend-medium text-[#A08963] text-lg">
+                                :
+                            </h1>
+                            <h1 class="lexend-medium text-[#A08963]/80 text-lg capitalize">
+                                {{ $invoice->delivery_options }}
+                            </h1>
+                        </div>
+                        <div class="flex gap-[8px]">
+                            <h1 class="lexend-medium text-[#A08963] text-lg w-[160px]">
+                                Paymend Method
+                            </h1>
+                            <h1 class="lexend-medium text-[#A08963] text-lg">
+                                :
+                            </h1>
+                            <h1 class="lexend-medium text-[#A08963]/80 text-lg capitalize">
+                                {{ $invoice->payment_method }}
                             </h1>
                         </div>
                     </div>

@@ -10,7 +10,15 @@ class Invoice extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $fillable = ['code', 'delivery_cost', 'status', 'user_id'];
+    protected $fillable = [
+        'code', 
+        'delivery_cost', 
+        'status', 
+        'user_id', 
+        'additional', 
+        'payment_method', 
+        'delivery_options'
+    ];
 
     public function products() {
         return $this->belongsToMany(Product::class, 'invoice_products', 'invoice_code', 'product_id')

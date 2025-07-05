@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShopReviewController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:admin', 'prevent-back-history'])
@@ -45,6 +46,9 @@ Route::get('/categories/{id}', [CategoryController::class, 'show']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::get('/dashboard/products/{id}', [ProductController::class, 'showUser']);
+
+Route::get('/shop-reviews', [ShopReviewController::class, 'index']);
+Route::get('/shop-reviews/{id}', [ShopReviewController::class, 'show']);
 
 Route::get('/', fn() => view('dashboard'));
 

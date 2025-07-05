@@ -1,8 +1,9 @@
 import './bootstrap';
 $(document).ready(() => {
     let allProducts = [];
+    let allShopReviews = [];
 
-    $("body").hide().fadeIn(300, () => {
+    $("body").hide().fadeIn(10, () => {
         $("#home-button").trigger("click")
         // $("#reviews-button").trigger("click")
         // $("#newspapers-button").trigger("click")
@@ -177,11 +178,10 @@ $(document).ready(() => {
         $(`#${buttonName}`).show()
     })
 
-    $(document).on("click", "#reviews-button.lexend-extrabold", function() {
+    $(document).on("click", "#reviews-button.lexend-extrabold", () => {
         $("#reviews-list-products").trigger("click")
-        // $("#reviews-list-overall").trigger("click")
     })
-    $(document).on("click", "#reviews-list-products.text-\\[\\#4E4C3D\\]", function() {
+    $(document).on("click", "#reviews-list-products.text-\\[\\#4E4C3D\\]", () => {
         $("#coffee-reviews").trigger("click")
     });
 
@@ -334,41 +334,6 @@ $(document).ready(() => {
         window.location.href = `/dashboard/products/${productId}`;
     })
 
-    const value = [1000,2000,3000,4000,5000]
-    for(let i = 4; i >= 0; i--) {
-        let star = ""
-        for(let j = 0; j <= i; j++) {
-            star += `<img src="assets/images/small-star.svg" alt="star" width="28">`
-        }
-        const width = value[i]/value.reduce((sum, current) => sum + current, 0)*100
-
-        $("table > tbody").append(
-            `
-                <tr>
-                    <td>
-                        <div class="flex justify-end items-center">
-                            ${star}
-                        </div>
-                    </td>
-                    <td>
-                        <div class="flex justify-end items-center">
-                            <div class="min-w-[300px] h-[20px] outline-2 outline-[#E6D4A6] bg-white rounded-[12px] overflow-hidden">
-                                <div class="min-h-full w-[${width}%] bg-[#E6D4A6] rounded-r-[12px]"></div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="flex justify-center items-center">
-                            <h1 class="lexend-semibold text-[#A08963] text-xl">
-                                ${value[i]}
-                            </h1>
-                        </div>
-                    </td>
-                </tr>
-            `
-        )
-    }
-
     const buttonName = ["All",5,4,3,2,1]
     for(let i = 0; i < 6; i++) {
         let buttonContent = buttonName[i]
@@ -376,7 +341,7 @@ $(document).ready(() => {
         $("#filter-star").append(
             `
                 <button
-                class="lexend-bold text-lg rounded-[16px] outline-2 outline-[#706D54] bg-white text-[#A08963] flex justify-center items-center gap-[4px] min-w-max h-[32px] cursor-pointer hover:bg-gray-200/75 active:bg-[#706D54]/25 active:text-[#A08963] focus:bg-[#706D54] focus:text-white"
+                class="lexend-bold text-lg rounded-[16px] outline-2 outline-[#706D54] bg-white text-[#A08963] flex justify-center items-center gap-[4px] min-w-max h-[32px] cursor-pointer hover:bg-gray-200/75"
                 id="star-${buttonName[i]}"
                 >
                     ${buttonContent}
@@ -384,6 +349,133 @@ $(document).ready(() => {
             `
         )
     }
+    (async () => {
+        try {
+            const response = await fetch("/shop-reviews", { method: "GET" });
+            const data = await response.json();
+                
+            if (response.ok) {
+                allShopReviews = data.shop_reviews;
+                $("#ratingCount").text(`Based on ${allShopReviews.length} Ratings`)
+                $("#ratingAvg").text(avg(allShopReviews) ?? 0)
+
+                const value = [0, 0, 0, 0, 0];
+                allShopReviews.forEach(review => {
+                    const rate = review?.rate ?? 0;
+                    if(rate >= 1 && rate <= 5) {
+                        value[rate-1]++;
+                    }
+                });
+
+                for(let i = 4; i >= 0; i--) {
+                    let star = ""
+                    for(let j = 0; j <= i; j++) {
+                        star += `<img src="assets/images/small-star.svg" alt="star" width="28">`
+                    }
+
+                    const width = value[i]/allShopReviews.length*100;
+                    console.log(width)
+
+                    $("table > tbody").append(
+                        `
+                            <tr>
+                                <td>
+                                    <div class="flex justify-end items-center">
+                                        ${star}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="flex justify-end items-center">
+                                        <div class="min-w-[300px] h-[20px] outline-2 outline-[#E6D4A6] bg-white rounded-[12px] overflow-hidden">
+                                            <div class="min-h-full w-[${width}%] bg-[#E6D4A6] rounded-r-[12px]"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="flex justify-center items-center">
+                                        <h1 class="lexend-semibold text-[#A08963] text-xl">
+                                            ${value[i]}
+                                        </h1>
+                                    </div>
+                                </td>
+                            </tr>
+                        `
+                    )
+                }
+            } else {
+                alert("Gagal mengambil data review toko!");
+            }
+        } catch (err) {
+            alert("Gagal menghubungi server.");
+            console.error(err);
+        }
+    })();
+    function shopReview(review, bgColor) {
+        let star = ""
+        for(let j = 0; j < 5; j++) {
+            if(j < (review.rate%6)) {
+                star += `<img src="assets/images/small-star.svg" alt="" class="w-[20px] h-[20px] mr-[4px]">`
+            } else {
+                star += `<img src="assets/images/star-outlined.png" alt="" class="w-[16px] h-[16px] mr-[4px]" >`
+            }
+        }
+        return `
+            <div class="${bgColor} w-full h-[320px] flex justify-center items-start gap-[20px] pt-[32px] pb-[24px]">
+                <div class="flex justify-center items-center overflow-hidden w-[80px] h-[80px] rounded-[16px] outline-1 outline-[#706D54]">
+                    <img src="${review.user.image_path}" alt="${review.user.name}-profile">
+                </div>
+                <div class="w-[800px] h-full grid place-content-between">
+                    <div class="flex flex-col gap-[4px] max-h-[214px]">
+                        <h1 class="lexend-semibold text-[#706D54] text-[24px] capitalize">
+                            ${review.user.name}
+                        </h1>
+                        <div class="flex items-center">${star}</div>
+                        <h1 class="lexend-regular text-[#706D54]/75 text-[12px]">
+                            ${review.date}
+                        </h1>
+                        <p class="lexend-regular text-[#706D54] text-[16px]">
+                            ${review.review ?? "-"} 
+                        </p>
+                    </div>
+                    <div class="flex items-center rounded-lg pl-3 outline-1 -outline-offset-1 outline-[#706D54] bg-white focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-[#706D54] w-[200px] h-[40px] z-2">
+                        <input 
+                        class="rounded-r-4xl block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-[#706D54] font-medium placeholder:text-[#706D54]/50 placeholder:font-normal focus:outline-none sm:text-sm/6"
+                        type="text" 
+                        name="reply"
+                        placeholder="Reply..."
+                        >
+                    </div>
+                </div>
+            </div>
+        `
+    }
+    $(document).on("click", "button[id^='star-']", function() {
+        const reviewShowed = $(this).attr("id").split("star-")[1]
+        let content = "";
+        let order = 0;
+        allShopReviews.forEach(review => {
+            const bgColor = ((order%2) === 0) ? "bg-[#D9D9D980]" : "bg-white"
+            if(reviewShowed === "All") {
+                content += shopReview(review, bgColor)
+                order++
+            } else {
+                if(reviewShowed == review.rate) {
+                    content += shopReview(review, bgColor)
+                    order++
+                }
+            }
+        })
+        $("#shop-reviews").empty().append(content)
+        $("button[id^='star-']")
+            .removeClass("bg-[#706D54] text-white")
+            .addClass("bg-white text-[#A08963] hover:bg-gray-200/75")
+        $(this)
+            .removeClass("bg-white text-[#A08963] hover:bg-gray-200/75")
+            .addClass("bg-[#706D54] text-white")
+    })
+    $(document).on("click", "#reviews-list-overall", () => {
+        $("#star-All").trigger("click")
+    })
 
     for(let i = 0; i < 3; i++) {
         $("#newspapers-facts").append(
