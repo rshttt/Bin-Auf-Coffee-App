@@ -82,6 +82,16 @@
                                     {{ $product->review->rate ?? 0 }}
                                 </h1>
                             </div>
+                            <div>
+                                <h1 class="lexend-medium text-lg text-[#A08963]">
+                                    Description :
+                                </h1>
+                                <div class="pl-5">
+                                    <h1 class="capitalize lexend-medium text-xl text-[#706D54]">
+                                        {{ $product->description }}
+                                    </h1>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
