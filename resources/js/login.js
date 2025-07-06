@@ -1,3 +1,4 @@
+import './bootstrap';
 $(document).ready(() => {
     $("#toggle-password").click(function() {
         const newType = ($("#password").attr("type") === "password") ? "text" : "password"

@@ -5,8 +5,11 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/css/dashboard.css', 
-                'resources/js/dashboard.js'
+                'resources/css/style.css', 
+                'resources/js/dashboard.js',
+                'resources/js/bootstrap.js',
+                'resources/js/login.js',
+                'resources/js/admin.js'
             ],
             refresh: true,
         }),

@@ -1,4 +1,4 @@
-// import './bootstrap';
+import './bootstrap';
 $(document).ready(() => {
     let allProducts = [];
 
