@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->string('name')->unique();
 
-            $table->string('description');
+            $table->text('description');
 
             $table->timestamps();
         });
@@ -56,7 +56,7 @@ return new class extends Migration
 
             $table->unsignedInteger('price');
 
-            $table->string('description');
+            $table->text('description');
 
             $table->timestamps();
         });
@@ -93,7 +93,7 @@ return new class extends Migration
 
             $table->unsignedTinyInteger('rate');
 
-            $table->string('review')->nullable();
+            $table->text('review')->nullable();
 
             $table->timestamps();
 
@@ -105,7 +105,7 @@ return new class extends Migration
 
             $table->unsignedTinyInteger('rate');
 
-            $table->string('review')->nullable();
+            $table->text('review')->nullable();
 
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
 

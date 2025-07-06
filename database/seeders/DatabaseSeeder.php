@@ -36,7 +36,8 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'faisal',
                 'email' => 'faisal@gmail.com',
-                'password' => 'faisal123'
+                'password' => 'faisal123',
+                'image_path' => 'assets\images\faisal-profile.jpg'
             ],
         ];
         
@@ -47,6 +48,7 @@ class DatabaseSeeder extends Seeder
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'password' => Hash::make($user['password']),
+                'image_path' => $user['image_path'] ?? null
             ]);
         }
     }

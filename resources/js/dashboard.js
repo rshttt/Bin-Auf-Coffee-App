@@ -22,9 +22,28 @@ $(document).ready(() => {
     }, {
         threshold: 0.1
     }) 
-    document.querySelectorAll(".fade-in-section").forEach(elements => {
-        observer.observe(elements)
-    })
+    function observeElement(element) {
+        observer.observe(element);
+    }
+    document.querySelectorAll(".fade-in-section").forEach(observeElement);
+    const mutationObserver = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+            if(mutation.type === 'childList') {
+                mutation.addedNodes.forEach(node => {
+                    if(node.nodeType === 1) { 
+                        if(node.matches('.fade-in-section')) {
+                            observeElement(node);
+                        }
+                        node.querySelectorAll('.fade-in-section').forEach(observeElement);
+                    }
+                });
+            }
+        });
+    });
+    mutationObserver.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 
     $("button[id$='-button']").click(function() {
         const buttonName = $(this).attr("id").split("-button")[0]
@@ -279,9 +298,9 @@ $(document).ready(() => {
                     
                     for(let j = 0; j < 5; j++) {
                         if(j < (rateCount%6)) {
-                            star += `<img src="assets/images/small-star.svg" alt="" class="w-[20px] h-[20px] mr-[4px]">`
+                            star += `<div class="min-w-[20px] max-w-[20px] flex justify-center items-center"><img src="assets/images/small-star.svg" alt="" class="w-[20px] h-[20px] mr-[4px]"></div>`
                         } else {
-                            star += `<img src="assets/images/star-outlined.png" alt="" class="w-[16px] h-[16px] mr-[4px]" >`
+                            star += `<div class="min-w-[20px] max-w-[20px] flex justify-center items-center"><img src="assets/images/star-outlined.svg" alt="" class="w-[16px] h-[16px] mr-[4px]"></div>`
                         }
                     }
 
@@ -374,7 +393,6 @@ $(document).ready(() => {
                     }
 
                     const width = value[i]/allShopReviews.length*100;
-                    console.log(width)
 
                     $("table > tbody").append(
                         `
@@ -414,36 +432,38 @@ $(document).ready(() => {
         let star = ""
         for(let j = 0; j < 5; j++) {
             if(j < (review.rate%6)) {
-                star += `<img src="assets/images/small-star.svg" alt="" class="w-[20px] h-[20px] mr-[4px]">`
+                star += `<div class="min-w-[20px] max-w-[20px] flex justify-center items-center"><img src="assets/images/small-star.svg" alt="" class="w-[20px] h-[20px] mr-[4px]"></div>`
             } else {
-                star += `<img src="assets/images/star-outlined.png" alt="" class="w-[16px] h-[16px] mr-[4px]" >`
+                star += `<div class="min-w-[20px] max-w-[20px] flex justify-center items-center"><img src="assets/images/star-outlined.svg" alt="" class="w-[16px] h-[16px] mr-[4px]"></div>`
             }
         }
         return `
-            <div class="${bgColor} w-full h-[320px] flex justify-center items-start gap-[20px] pt-[32px] pb-[24px]">
-                <div class="flex justify-center items-center overflow-hidden w-[80px] h-[80px] rounded-[16px] outline-1 outline-[#706D54]">
-                    <img src="${review.user.image_path}" alt="${review.user.name}-profile">
-                </div>
-                <div class="w-[800px] h-full grid place-content-between">
-                    <div class="flex flex-col gap-[4px] max-h-[214px]">
-                        <h1 class="lexend-semibold text-[#706D54] text-[24px] capitalize">
-                            ${review.user.name}
-                        </h1>
-                        <div class="flex items-center">${star}</div>
-                        <h1 class="lexend-regular text-[#706D54]/75 text-[12px]">
-                            ${review.date}
-                        </h1>
-                        <p class="lexend-regular text-[#706D54] text-[16px]">
-                            ${review.review ?? "-"} 
-                        </p>
+            <div class="${bgColor} w-full h-[320px] flex justify-center pt-[32px] pb-[24px]">
+                <div class="fade-in-section opacity-0 translate-y-8 transition-all duration-700 ease-out flex justify-center items-start gap-[20px]">
+                    <div class="flex justify-center items-center overflow-hidden w-[80px] h-[80px] rounded-[16px] outline-1 outline-[#706D54]">
+                        <img src="${review.user.image_path ?? 'assets/images/blank-profile.png'}" alt="${review.user.name}-profile">
                     </div>
-                    <div class="flex items-center rounded-lg pl-3 outline-1 -outline-offset-1 outline-[#706D54] bg-white focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-[#706D54] w-[200px] h-[40px] z-2">
-                        <input 
-                        class="rounded-r-4xl block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-[#706D54] font-medium placeholder:text-[#706D54]/50 placeholder:font-normal focus:outline-none sm:text-sm/6"
-                        type="text" 
-                        name="reply"
-                        placeholder="Reply..."
-                        >
+                    <div class="w-[800px] h-full grid place-content-between">
+                        <div class="flex flex-col gap-[4px] max-h-[214px]">
+                            <h1 class="lexend-semibold text-[#706D54] text-[24px] capitalize">
+                                ${review.user.name}
+                            </h1>
+                            <div class="flex items-center">${star}</div>
+                            <h1 class="lexend-regular text-[#706D54]/75 text-[12px]">
+                                ${review.date}
+                            </h1>
+                            <p class="lexend-regular text-[#706D54] text-[16px]">
+                                ${review.review ?? "-"} 
+                            </p>
+                        </div>
+                        <div class="flex items-center rounded-lg pl-3 outline-1 -outline-offset-1 outline-[#706D54] bg-white focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-[#706D54] w-[200px] h-[40px] z-2">
+                            <input 
+                            class="rounded-r-4xl block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-[#706D54] font-medium placeholder:text-[#706D54]/50 placeholder:font-normal focus:outline-none sm:text-sm/6"
+                            type="text" 
+                            name="reply"
+                            placeholder="Reply..."
+                            >
+                        </div>
                     </div>
                 </div>
             </div>

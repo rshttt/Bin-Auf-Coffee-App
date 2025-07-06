@@ -52,7 +52,8 @@ class ProductSeeder extends Seeder
                 'category_id' => $category[$i],
                 'stock' => $stock,
                 'price' => $price,
-                'description' => $description
+                'description' => $description,
+                'image_path' => 'assets/images/' . $name . '.jpg'
             ]);
             
             $stock += 4;
@@ -111,7 +112,8 @@ class ProductSeeder extends Seeder
             for ($i = 0; $i <= 5; $i++) {
                 ShopReview::create([
                     'user_id' => $user_id[$i % count($user_id)],
-                    'rate' => $i
+                    'rate' => $i,
+                    'review' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
                 ]);
             }
         }
