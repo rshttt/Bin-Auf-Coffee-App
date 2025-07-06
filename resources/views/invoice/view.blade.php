@@ -173,7 +173,7 @@
                     <div class="w-full py-[24px] overflow-x-auto snap-x snap-mandatory no-scrollbar">
                         <div class="flex gap-[20px] w-max mx-[50px]">
                             @foreach ($invoice->products as $products)
-                                <div class="bg-white outline-1 outline-[#706D54] rounded-[12px] min-w-[320px] max-w-[320px] overflow-hidden min-h-[120px] flex justify-between items-center gap-[8px] p-[8px]">
+                                <div class="bg-white outline-1 outline-[#706D54] rounded-[12px] min-w-[320px] max-w-[320px] overflow-hidden min-h-[120px] max-h-[120px] flex justify-between items-center gap-[8px] p-[8px]">
                                     <div class="min-w-[100px] max-w-[100px] min-h-full max-h-full overflow-hidden flex justify-center items-center rounded-[8px]">
                                         <img src="{{ asset($products->image_path ?? '')}}" alt="{{ $products->name }}">
                                     </div>
