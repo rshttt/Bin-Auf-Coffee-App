@@ -43,7 +43,7 @@ class UserAPIController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, (string) $user->password)) {
             return response()->json([
                 'message' => 'Email atau password salah.'
             ], 401);
